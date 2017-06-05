@@ -26,7 +26,8 @@ const setModel = require('./concerns/set-mongoose-model')
 
 const create = (req, res, next) => {
   const score = Object.assign(req.body.score, {
-    _owner: req.user._id
+    _owner: req.user._id,
+    exerciseLength: req.exercise.text.length
   })
   req.exercise.scores.push(score)
   req.exercise.save()

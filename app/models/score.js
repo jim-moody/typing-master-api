@@ -15,6 +15,10 @@ const scoreSchema = new mongoose.Schema({
   time: {
     type: Number,
     required: true
+  },
+  exerciseLength: {
+    type: Number,
+    required: true
   }
 }, {
   timestamps: true,
@@ -29,12 +33,7 @@ const scoreSchema = new mongoose.Schema({
 })
 
 scoreSchema.virtual('wpm').get(function length () {
-  const parent = this.parent()
-  return Math.round((parent.text.length / 5) / (this.time * 60))
-})
-scoreSchema.virtual('accuracy').get(function length () {
-  const total = this.parent().text.length
-  return total / (total - this.mistakes)
+  return Math.round((this.exerciseLength / 5) / (this.time / 60))
 })
 
 const Score = mongoose.model('Score', scoreSchema)
