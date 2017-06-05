@@ -28,13 +28,33 @@ const create = (req, res, next) => {
   const exercise = Object.assign(req.body.exercise, {
     _owner: req.user._id
   })
-  Exercises.create(exercise)
+  Exercises.findOne({name: req.body.exercise.name})
+    .then(response => {
+      console.log(response)
+      if (response) {
+        const error = {
+          status: 400,
+          error: {
+            message: 'Duplicate Name',
+            type: 'duplicate'
+          }
+        }
+        throw error
+      }
+    })
+    .then(() => Exercises.create(exercise))
     .then(exercise =>
       res.status(201)
         .json({
           exercise: exercise.toJSON({ virtuals: true, user: req.user })
         }))
-    .catch(next)
+    .catch(error => {
+      if (error.status) {
+        res.status(400).send(error.error)
+      } else {
+        next(error)
+      }
+    })
 }
 
 const update = (req, res, next) => {
