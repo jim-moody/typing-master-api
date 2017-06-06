@@ -10,6 +10,10 @@ const setModel = require('./concerns/set-mongoose-model')
 
 const index = (req, res, next) => {
   Exercises.find()
+    .populate({
+      path: 'scores._owner',
+      select: 'email'
+    })
     .then(exercises => res.json({
       exercises: exercises.map((e, i) =>
         e.toJSON({ virtuals: true, user: req.user, index: i }))
@@ -17,10 +21,17 @@ const index = (req, res, next) => {
     .catch(next)
 }
 
-const show = (req, res) => {
-  res.json({
-    exercise: req.exercise.toJSON({ virtuals: true, user: req.user })
-  })
+const show = (req, res, next) => {
+  const id = req.params.id
+  Exercises.findOne({_id: id})
+    .populate({
+      path: 'scores._owner',
+      select: 'email'
+    })
+    .then(response =>
+      res.json({ exercise: response.toJSON({ virtuals: true, user: req.user }) })
+    )
+  .catch(next)
 }
 
 const create = (req, res, next) => {
@@ -78,7 +89,6 @@ module.exports = controller({
   destroy
 }, { before: [
   { method: setUser, only: ['index', 'show'] },
-  { method: authenticate, except: ['index', 'show'] },
-  { method: setModel(Exercises), only: ['show'] },
+  { method: authenticate, except: ['index', 'show'] }
   { method: setModel(Exercises, { forUser: true }), only: ['update', 'destroy'] }
 ] })

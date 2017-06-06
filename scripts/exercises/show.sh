@@ -2,8 +2,8 @@
 
 API="http://localhost:4741"
 URL_PATH="/exercises"
-ID=59333bf022ad60957e90d290
-TOKEN=/Q4D5GfiBrIUUFEuEmBWF3SxeeHf1BHHxwNROJu92QE=--n6VYOjNnR6fDRLWf7fa2dQiKPGzo/s3NAVAm1sFVElU=
+ID=5935a1842514256126ac56ae
+TOKEN="boXQRyC/A00DxYrxzn2ZX2EEeAhSpMDV5rHwhb1a1zY=--uqMtcS/nI8S4fiar+wPkZa2MndmUJbnghbOTYiarjiA="
 
 curl "${API}${URL_PATH}/${ID}" \
   --include \
