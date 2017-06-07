@@ -6,7 +6,8 @@ const mongoose = require('mongoose')
 const exerciseSchema = new mongoose.Schema({
   text: {
     type: String,
-    required: true
+    required: true,
+    maxlength: 750
   },
   name: {
     type: String,
