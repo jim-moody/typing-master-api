@@ -41,7 +41,6 @@ const create = (req, res, next) => {
   })
   Exercises.findOne({name: req.body.exercise.name})
     .then(response => {
-      console.log(response)
       if (response) {
         const error = {
           status: 400,
@@ -70,9 +69,28 @@ const create = (req, res, next) => {
 
 const update = (req, res, next) => {
   delete req.body._owner  // disallow owner reassignment.
-  req.exercise.update(req.body.exercise)
+  Exercises.findOne({name: req.body.exercise.name})
+    .then(response => {
+      if (response && response.id !== req.params.id) {
+        const error = {
+          status: 400,
+          error: {
+            message: 'Duplicate Name',
+            type: 'duplicate'
+          }
+        }
+        throw error
+      }
+    })
+    .then(() => req.exercise.update(req.body.exercise))
     .then(() => res.sendStatus(204))
-    .catch(next)
+    .catch(error => {
+      if (error.status) {
+        res.status(400).send(error.error)
+      } else {
+        next(error)
+      }
+    })
 }
 
 const destroy = (req, res, next) => {
