@@ -260,7 +260,7 @@ Content-Type: application/json; charset=utf-8
 | DELETE | `/exercises/:id`    | `exercises#destroy` |
 | GET    | `/exercises/:id`    | `exercises#show`    |
 
-See [`scripts/exercises`](exercise scripts) for sample curl requests
+See [`scripts/exercises`](scripts/exercises) for sample curl requests
 
 ### Scores
 
@@ -268,7 +268,7 @@ See [`scripts/exercises`](exercise scripts) for sample curl requests
 |--------|-------------------------|-------------------|
 | POST   | `/exercises/:id/scores` | `scores#create` |
 
-See [`scripts/scores`](score scripts) for sample curl requests
+See [`scripts/scores`](scripts/scores) for sample curl requests
 
 ## [License](LICENSE)
 
