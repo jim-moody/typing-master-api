@@ -33,7 +33,11 @@ const scoreSchema = new mongoose.Schema({
 })
 
 scoreSchema.virtual('wpm').get(function length () {
-  return Math.round((this.exerciseLength / 5) / (this.time / 60))
+  const wpm = Math.round((this.exerciseLength / 5) / (this.time / 60)) || 0
+  if (wpm === Infinity) {
+    return 1000
+  }
+  return wpm
 })
 
 const Score = mongoose.model('Score', scoreSchema)
