@@ -14,7 +14,14 @@ This is the backend for the Typing Master.
 
 ## Approach
 
+My approach was basically get a CRUD working on something and then go from there. I decided to make exercises my CRUD, even though in real life I may not want to allow people to delete exercises once they have been added since it would wipe out all the scores.
+
+Once I got the CRUD working on exercises I added Scores which is an array on each exercise.  This was interesting because I was able to try implementing a schema on another schema.  It was helpful to do it this way because I could include mongoose validations and keep the separation of concerns by putting the Score Schema in a different file.
+
+
 ## Unsolved Problems
+
+If I had more time I probably would have added some more custom errors around authentication so that the user gets a better error message when something goes wrong.
 
 ## Dependencies
 
@@ -51,12 +58,8 @@ Routes are stored in [`config/routes.js`](config/routes.js)
 
 ## API
 
-Use this as the basis for your own API documentation. Add a new third-level
-heading for your custom entities, and follow the pattern provided for the
-built-in user authentication documentation.
 
-Scripts are included in [`scripts`](scripts) to test built-in actions. Add your
-own scripts to test your custom API.
+Scripts are included in [`scripts`](scripts) to test built-in actions.
 
 ### Authentication
 
@@ -246,6 +249,26 @@ Content-Type: application/json; charset=utf-8
   }
 }
 ```
+
+### Exercises
+
+| Verb   | URI Pattern         | Controller#Action   |
+|--------|---------------------|---------------------|
+| GET    | `/exercises`        | `exercises#index`   |
+| POST   | `/exercises`        | `exercises#create`  |
+| PATCH  | `/exercises/:id`    | `exercises#update`  |
+| DELETE | `/exercises/:id`    | `exercises#destroy` |
+| GET    | `/exercises/:id`    | `exercises#show`    |
+
+See [`scripts/exercises`](exercise scripts) for sample curl requests
+
+### Scores
+
+| Verb   | URI Pattern            | Controller#Action |
+|--------|-------------------------|-------------------|
+| POST   | `/exercises/:id/scores` | `scores#create` |
+
+See [`scripts/scores`](score scripts) for sample curl requests
 
 ## [License](LICENSE)
 
